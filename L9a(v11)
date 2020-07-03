@@ -1,0 +1,79 @@
+#include <iostream>
+
+using namespace std;
+
+void input_matr(int**& a, int n)
+{
+    int i, j;
+    a = new int* [n];
+    cout << "Заполните масив: \n";
+    for (i = 0; i < n; i++)
+    {
+        a[i] = new int[n];
+        for (j = 0; j < n; j++)
+        {
+            cout << "Элемент[" << i << "][" << j << "] = ";
+            cin >> a[i][j];
+        }
+    }
+}
+
+int sum(int* a, int n)
+{
+    int i, s = 0;
+    for (i = 0; i < n; i++)
+        s += a[i];
+    return s;
+}
+
+void bubblesort(int** a, int n) {
+    int* temp;
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (sum(a[i], n) > sum(a[j], n))
+            {
+                temp = a[i];
+                a[i] = a[j];
+                a[j] = temp;
+            }
+        }
+    }
+}
+
+void output_matr(int** a, int n)
+{
+    int i, j;
+    for (i = 0; i < n; i++)
+    {
+        for (j = 0; j < n; j++)
+        {
+            cout << a[i][j] << " ";
+        }
+        cout << "\n";
+    }
+}
+
+void delete_a(int** a, int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        delete[] a[i];
+    }
+    delete[] a;
+}
+
+int main()
+{
+    setlocale(LC_CTYPE, "");
+    int n;
+    cout << "Введите размерность матрицы: ";
+    cin >> n;
+    int** a = NULL;
+    input_matr(a, n);
+    cout << "Исходная матрица: \n";
+    output_matr(a, n);
+    bubblesort(a, n);
+    cout << "Результирующая матрица: \n";
+    output_matr(a, n);
+    delete_a(a, n);
+}
